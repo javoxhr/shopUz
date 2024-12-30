@@ -1,11 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useStore } from '../store/store';
+import { getDocs, collection, query, limit } from 'firebase/firestore';
 
 const store = useStore()
-
-import { useNuxtApp } from '#app';
-import { collection, getDocs } from 'firebase/firestore';
 
 const products = ref([]);
 const loading = ref(true);
@@ -14,14 +12,33 @@ const nuxtApp = useNuxtApp();
 const db = nuxtApp.$db;
 
 const fetchProducts = async () => {
-  const querySnapshot = await getDocs(collection(db, 'products'));
-  products.value = querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
+  try {
+    const querySnapshot = await getDocs(
+      query(
+        collection(db, 'products'),
+        limit(store.limitCount)
+      )
+    );
 
-  store.products = products.value
-  console.log(store.products)
+    const productsData = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    if (productsData.length < store.limitCount) {
+      store.moreProductBtn = false
+    }
+
+    products.value = productsData;
+    store.products = products.value;
+    loading.value = false;
+
+    console.log(products.value);
+
+  } catch (error) {
+    console.error("Error fetching products: ", error);
+    loading.value = false;
+  }
 };
 
 onMounted(() => {
@@ -32,6 +49,10 @@ onMounted(() => {
       store.cart = JSON.parse(storedCart);
     }
   }
+});
+
+watchEffect(() => {
+  fetchProducts();
 });
 </script>
 

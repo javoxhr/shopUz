@@ -1,13 +1,16 @@
 <script setup>
-import {useStore} from "../store/store"
+import { useStore } from "../store/store"
 import ProductCard from "@/components/ProductCard"
 
 const store = useStore()
 </script>
 
 <template>
-    <div class="grid">
-        <ProductCard v-for="item in store.products" :key="item.id" :product="item" />
+    <div>
+        <div class="grid">
+            <ProductCard v-for="item in store.products" :key="item.id" :product="item" />
+        </div>
+        <button v-if="store.moreProductBtn" @click="store.limitCount += 8" class="btn" style="color: #fff; background: #ff7f00; width: 100%; margin: 10px 0;">Yana Mahsulot</button>
     </div>
 </template>
 

@@ -10,9 +10,12 @@ export const useStore = defineStore('store', () => {
   }
 
   const products = ref([])
-
+  const limitCount = 8
+  const moreProductBtn = ref(true)
   return {
     cart,
-    products
+    products,
+    limitCount,
+    moreProductBtn
   };
 });
