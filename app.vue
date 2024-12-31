@@ -2,6 +2,13 @@
 import { ref, onMounted } from 'vue';
 import { useStore } from '../store/store';
 import { getDocs, collection, query, limit } from 'firebase/firestore';
+import { useToastify } from './composables/notifications';
+
+const { notify } = useToastify();
+
+function showSuccessToast() {
+  notify('Успех! Все прошло успешно!', 'success');
+}
 
 const store = useStore()
 
@@ -10,6 +17,7 @@ const loading = ref(true);
 
 const nuxtApp = useNuxtApp();
 const db = nuxtApp.$db;
+
 
 const fetchProducts = async () => {
   try {
@@ -31,7 +39,7 @@ const fetchProducts = async () => {
 
     products.value = productsData;
     store.products = products.value;
-    loading.value = false;
+    store.loader = false
 
     console.log(products.value);
 

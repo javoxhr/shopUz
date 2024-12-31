@@ -22,10 +22,10 @@ const removeFromCart = (index) => {
 </script>
 
 <template>
-    <div class="container my-2">
+    <div class="container" style="padding: 0;">
         <div class="card shadow-sm">
-            <div class="card-header text-white" style="background: #ff7f00;">
-                <h3 class="mb-0">Savat</h3>
+            <div class="card-header text-black">
+                <h3 class="mb-0" style="text-align: center;">Savat</h3>
             </div>
             <div class="card-body" v-if="isClient">
                 <span v-if="!store.cart.length"
@@ -52,7 +52,7 @@ const removeFromCart = (index) => {
                 </div>
                 <!-- Итог -->
                 <div class="mt-4 text-end" v-if="store.cart.length">
-                    <h4>Jami narxi: {{ formatUzs(totalAmount) }} UZS</h4>
+                    <h4>Jami summa: {{ formatUzs(totalAmount) }} UZS</h4>
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-between" style="padding: 10px;">
@@ -71,10 +71,6 @@ const removeFromCart = (index) => {
 </template>
 
 <style>
-.card {
-    border-radius: 15px;
-}
-
 .card-header {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;

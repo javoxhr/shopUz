@@ -10,7 +10,7 @@ const store = useStore()
         <div class="grid">
             <ProductCard v-for="item in store.products" :key="item.id" :product="item" />
         </div>
-        <button v-if="store.moreProductBtn" @click="store.limitCount += 8" class="btn" style="color: #fff; background: #ff7f00; width: 100%; margin: 10px 0;">Yana Mahsulot</button>
+        <button v-if="store.moreProductBtn" @click="store.limitCount += 8" class="btn" style="color: #fff; background: #ff7f00; width: 100%; margin: 10px 0;">Yana ko'rsatish</button>
     </div>
 </template>
 
